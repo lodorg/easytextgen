@@ -1,0 +1,27 @@
+engine:
+  name: "EleutherEngine"
+  model: "GPT-J-6B"
+
+stop_string: "\n"
+temperature: 0.9
+top_p: 0.9
+top_k: 40
+max_generated_tokens: 50
+seed: 0
+force_safety: false
+on_stream: null
+prompt: |
+  Original: I told you..... We won't be able to finish the work until December 1
+  Formal: We will be able to finish the work by December 1.
+
+  Original: Kindly ask Mark to bring the team together for a planning session.
+  Casual: Tell Mark to get the team together for a fucking planning session
+
+  Original: I need to talk to you ASAP, call me!
+  Professional: Kindly contact me when you read this, it's urgent.
+
+  Original: As you can read in my previous email, I already told you that we won't be able to make it
+  Polite: There might be a misunderstanding. Unfortunately, I don't we'll be able to make it this time.
+
+  Original: {{text}}
+  {{style}}:

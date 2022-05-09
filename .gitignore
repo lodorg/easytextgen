@@ -1,0 +1,7 @@
+__pycache__
+.deta
+.pytest_cache
+.stfolder
+.venv
+.autoprompts
+play.ipynb

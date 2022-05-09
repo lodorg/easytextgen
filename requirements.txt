@@ -1,0 +1,7 @@
+requests
+transformers
+openai
+attrs
+pydantic
+pymongo[srv]
+rich
