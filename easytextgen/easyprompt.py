@@ -8,7 +8,7 @@ import yaml
 
 from easytextgen.prompt_utils import get_engine, get_prompt_variables, get_variables, set_variables
 from easytextgen.completion import CompletionParams, CompletionResult
-from easytextgen.engine import TextGenerationEngine
+from easytextgen.engine.base import TextGenerationEngine
 
 
 @dataclass
