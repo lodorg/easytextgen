@@ -1,19 +1,18 @@
-# TextGen-API
+# easytextgen
 
 Features:
-- Integration with 3rd party text generation services such as OpenAI, TextSynth, EleutherAI.
+- Use 3rd party text generation services such as OpenAI, TextSynth, or EleutherAI.
 - Define your own text generation engine.
 - Create your own prompts with AutoPrompt.
 - Text streaming is supported (if the 3rd party service text streaming is available).
 
 Use Cases:
-- Huggingface alternative code to generate text.
+- Huggingface alternative to generate text.
 - Streamlit web app that uses text generation AI.
 
 TODO:
 - Create tests.
 - Pypi listing.
-
 
 ## Installation
 
