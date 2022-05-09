@@ -3,7 +3,7 @@
 Features:
 - Use 3rd party text generation services such as OpenAI, TextSynth, or EleutherAI.
 - Define your own text generation engine.
-- Create your own prompts with AutoPrompt.
+- Create your own prompts with EasyPrompt.
 - Text streaming is supported (if the 3rd party service text streaming is available).
 
 Use Cases:
@@ -46,29 +46,29 @@ result = engine.generate(params)
 print(result.output_text)
 ```
 
-### Using AutoPrompt
+### Using EasyPrompt
 
-Example AutoPrompt with Single Argument
+Example EasyPrompt with Single Argument
 
 ```python
-from easytextgen import AutoPrompt
+from easytextgen import EasyPrompt
 
-autoprompt = AutoPrompt.from_file("./autoprompts/tweet-sentiment")  # Path to yaml file
-result = autoprompt.get_output("This product is awful. Not buying this again.")
+prompt = EasyPrompt.from_file("./easyprompts/tweet-sentiment")  # Path to yaml file
+result = prompt.get_output("This product is awful. Not buying this again.")
 print(result.output_text)
 ```
 
-Example AutoPrompt with Multiple Arguments (Use Keyword Arguments)
+Example EasyPrompt with Multiple Arguments (Use Keyword Arguments)
 
 ```python
-from easytextgen import AutoPrompt
+from easytextgen import EasyPrompt
 
-autoprompt = AutoPrompt.from_file("./autoprompts/style-changer")
-result = autoprompt.get_output(text="I need to meet ur daddy ASAP!", style="Formal")
+prompt = EasyPrompt.from_file("./easyprompts/style-changer")
+result = prompt.get_output(text="I need to meet ur daddy ASAP!", style="Formal")
 print(result.output_text)
 ```
 
-### Create New AutoPrompt
+### Create New EasyPrompt
 
 ```yaml
 engine:

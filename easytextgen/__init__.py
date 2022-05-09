@@ -1,2 +1,2 @@
-from easytextgen.autoprompt import AutoPrompt
+from easytextgen.easyprompt import EasyPrompt
 from easytextgen.completion import CompletionParams, CompletionResult

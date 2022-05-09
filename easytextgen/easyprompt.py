@@ -12,14 +12,14 @@ from easytextgen.engine import TextGenerationEngine
 
 
 @dataclass
-class AutoPrompt:
+class EasyPrompt:
     """Generic prompt type for auto prompting. Parameter style. Feel free to import and use `prompt_utils` """
     prompt: str
     engine: TextGenerationEngine
     parameters: CompletionParams
     
     @staticmethod
-    def from_file(path: Union[PathLike, str]) -> "AutoPrompt":
+    def from_file(path: Union[PathLike, str]) -> "EasyPrompt":
         path_string = str(path).replace(".yml", "").replace(".yaml", "")
         file_exist = False
 
@@ -36,7 +36,7 @@ class AutoPrompt:
             
         engine = get_engine(params["engine"])
         gen_params = CompletionParams(input_text="", **params)
-        return AutoPrompt(prompt=prompt, engine=engine, parameters=gen_params)
+        return EasyPrompt(prompt=prompt, engine=engine, parameters=gen_params)
     
     def get_prompt_variables(self) -> list:
         return get_prompt_variables(self.prompt)
@@ -68,7 +68,7 @@ class AutoPrompt:
         return output
 
 
-class AutoPromptAbstract(ABC, AutoPrompt):
+class AutoPromptAbstract(ABC, EasyPrompt):
     """Generic prompt type for auto prompting. Abstract style. Feel free to import and use `prompt_utils` """
     
     def __init__(self) -> None:

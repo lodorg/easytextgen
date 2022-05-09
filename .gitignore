@@ -3,6 +3,6 @@ __pycache__
 .pytest_cache
 .stfolder
 .venv
-.autoprompts
+.easyprompts
 play.py
 play.ipynb
