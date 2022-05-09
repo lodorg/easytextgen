@@ -1,0 +1,7 @@
+openai
+attrs
+pydantic
+transformers
+requests
+rich
+pyyaml
