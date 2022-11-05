@@ -22,7 +22,7 @@ class CompletionParams(BaseModel):
     temperature: float = 0.75
     presence_penalty: float = 0
     frequency_penalty: float = 0
-    seed: int = 0
+    seed: int = 0 (Zero means regenerate seed number every request)
     max_generated_tokens: int = 32
     stop_string: str = "<|endoftext|>"
     force_safety: bool = False

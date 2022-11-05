@@ -1,5 +1,6 @@
 import string
 import time
+import random
 from abc import ABC, abstractmethod
 
 from easytextgen.completion import CompletionParams, CompletionResult
@@ -43,6 +44,10 @@ class TextGenerationEngine(ABC):
         sanitized_text = "".join(filter(lambda x: x in printable, params.input_text))
         if len(sanitized_text) <= 1:
             raise ValueError("Length of input can't be zero.")
+        
+        # If seed is zero, randomize seed
+        if params.seed == 0:
+            params.seed = (int(time.time()) % 1000000) + random.randrange(1, 1000000)
         
         # Must return the completed text only
         output_text = self.on_generate(sanitized_text, params)  # type: ignore
