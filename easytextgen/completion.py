@@ -39,8 +39,9 @@ class CompletionParams(BaseModel):
     top_p: float = 1.0
     top_k: int = 40
     temperature: float = 0.75
-    presence_penalty: float = 0
-    frequency_penalty: float = 0
+    presence_penalty: float = 0.0
+    frequency_penalty: float = 0.0
+    repetition_penalty: float = 1.0
     seed: int = 0
     max_generated_tokens: int = 32
     stop_string: str = "<|endoftext|>"

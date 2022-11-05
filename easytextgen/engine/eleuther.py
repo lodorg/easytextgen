@@ -1,7 +1,7 @@
 import json
 import requests
 from easytextgen.completion import CompletionParams
-from easytextgen.engine.base import TextGenerationEngine
+from easytextgen.engine.base import CompletionParamType, TextGenerationEngine
 
 
 class EleutherEngine(TextGenerationEngine):
@@ -11,7 +11,11 @@ class EleutherEngine(TextGenerationEngine):
         self.model = model
 
     def get_available_parameters(self) -> list:
-        return super().get_available_parameters() + ["temperature", "top_p", "max_generated_tokens"]
+        return super().get_available_parameters() + [
+            CompletionParamType.TEMPERATURE, 
+            CompletionParamType.TOP_P, 
+            CompletionParamType.MAX_GENERATED_TOKENS
+        ]
 
     def on_generate(self, text: str, params: CompletionParams) -> str:
         json_parameters = json.dumps({

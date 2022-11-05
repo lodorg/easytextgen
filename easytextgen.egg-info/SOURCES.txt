@@ -10,3 +10,10 @@ easytextgen.egg-info/SOURCES.txt
 easytextgen.egg-info/dependency_links.txt
 easytextgen.egg-info/requires.txt
 easytextgen.egg-info/top_level.txt
+easytextgen/engine/__init__.py
+easytextgen/engine/base.py
+easytextgen/engine/eleuther.py
+easytextgen/engine/open_ai.py
+easytextgen/engine/priority.py
+easytextgen/engine/textsynth.py
+easytextgen/engine/vicgalle.py

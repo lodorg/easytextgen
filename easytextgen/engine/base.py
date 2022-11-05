@@ -5,6 +5,19 @@ from abc import ABC, abstractmethod
 from easytextgen.completion import CompletionParams, CompletionResult
 
 
+class CompletionParamType:
+    TEMPERATURE = "temperature"
+    TOP_P = "top_p"
+    TOP_K = "top_k"
+    MAX_GENERATED_TOKENS = "max_generated_tokens"
+    REPETITION_PENALTY = "repetition_penalty"
+    PRESENCE_PENALTY = "presence_penalty"
+    FREQUENCY_PENALTY = "frequency_penalty"
+    STOP_STRING = "stop_string"
+    SEED = "seed"
+    ON_STREAM = "on_stream"
+    
+
 class TextGenerationEngine(ABC):
     
     @abstractmethod
@@ -12,7 +25,7 @@ class TextGenerationEngine(ABC):
         raise NotImplementedError()
 
     def get_available_parameters(self) -> list[str]:
-        return ["stop_string"]
+        return [CompletionParamType.STOP_STRING]
     
     def get_info(self, params: CompletionParams) -> dict:
         return {
@@ -32,9 +45,9 @@ class TextGenerationEngine(ABC):
             raise ValueError("Length of input can't be zero.")
         
         # Must return the completed text only
-        result = self.on_generate(sanitized_text, params)  # type: ignore
-        result = result.replace(sanitized_text, "", 1)
-        result = result.split(params.stop_string)[0]
+        output_text = self.on_generate(sanitized_text, params)  # type: ignore
+        output_text = output_text.replace(sanitized_text, "", 1)
+        output_text = output_text.split(params.stop_string)[0]
         
         # TODO: Add a safety filter layer
         output_timestamp = int(time.time() * 1000)
@@ -48,5 +61,5 @@ class TextGenerationEngine(ABC):
         
         # TODO: Result = message regarding safety if params.force_safety = True
         
-        result = CompletionResult(input_text=sanitized_text, output_text=result, extras=extras)        
+        result = CompletionResult(input_text=sanitized_text, output_text=output_text, extras=extras)        
         return result

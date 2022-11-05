@@ -1,14 +1,29 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from io import TextIOWrapper
 from os import PathLike
 from copy import deepcopy
 from typing import Union
 import os
 import yaml
+import re
 
 from easytextgen.prompt_utils import get_engine, get_prompt_variables, get_variables, set_variables
 from easytextgen.completion import CompletionParams, CompletionResult
 from easytextgen.engine.base import TextGenerationEngine
+
+
+def get_from_markdown(fs: TextIOWrapper) -> tuple[dict, str]:
+    filestring = fs.read()
+    
+    try:
+        params = yaml.safe_load(re.findall(r"```yaml(.+?)```", filestring, re.DOTALL)[0])
+        prompt = str(re.findall(r"```txt(.+?)```", filestring, re.DOTALL)[0]).strip()
+    except Exception as e:
+        print(e)
+        raise Exception("Make sure you write the markdown file in the correct format. Please see the examples in the repo.")
+
+    return params, prompt
 
 
 @dataclass
@@ -23,11 +38,18 @@ class EasyPrompt:
         path_string = str(path).replace(".yml", "").replace(".yaml", "")
         file_exist = False
 
-        for ext in [".yml", ".yaml"]:
+        for ext in [".md", ".yml", ".yaml"]:
             if os.path.exists(path_string + ext):
+                
                 with open(path_string + ext, "r") as fs:
-                    params = yaml.safe_load(fs)
-                    prompt = params["prompt"]
+                    
+                    if ext == ".md":
+                        params, prompt = get_from_markdown(fs)
+                    else:
+                        params: dict = yaml.safe_load(fs)
+                        prompt = params["prompt"] + ""
+                        del params["prompt"]
+                    
                     file_exist = True
                     break
         

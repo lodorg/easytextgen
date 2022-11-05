@@ -3,7 +3,7 @@ import openai
 
 from easytextgen import tokenizer
 from easytextgen.completion import CompletionParams
-from easytextgen.engine.base import TextGenerationEngine
+from easytextgen.engine.base import CompletionParamType, TextGenerationEngine
 
 
 class OpenAIEngine(TextGenerationEngine):
@@ -21,7 +21,12 @@ class OpenAIEngine(TextGenerationEngine):
         openai.api_key = self.api_key
 
     def get_available_parameters(self) -> list:
-        return super().get_available_parameters() + ["model", "temperature", "top_p", "stream", "max_generated_tokens"]
+        return super().get_available_parameters() + [
+            CompletionParamType.TEMPERATURE, 
+            CompletionParamType.TOP_P,
+            CompletionParamType.ON_STREAM,
+            CompletionParamType.MAX_GENERATED_TOKENS
+        ]
 
     def on_generate(self, text: str, params: CompletionParams) -> str:
         completion = openai.Completion.create(

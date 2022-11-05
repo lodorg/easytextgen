@@ -34,5 +34,4 @@ class PriorityEngine(TextGenerationEngine):
                 return out
             except Exception as e:
                 print(f"[ERROR at Engine '{engine}']: {e}")
-        
-        return "[ERROR] All engines failure."
+                raise Exception("All engines failure.")

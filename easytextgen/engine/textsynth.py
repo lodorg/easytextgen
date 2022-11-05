@@ -3,7 +3,7 @@ import attr
 import requests
 from easytextgen import tokenizer
 from easytextgen.completion import CompletionParams
-from easytextgen.engine.base import TextGenerationEngine
+from easytextgen.engine.base import CompletionParamType, TextGenerationEngine
 
 
 class TextsynthEngine(TextGenerationEngine):
@@ -17,8 +17,14 @@ class TextsynthEngine(TextGenerationEngine):
 
     def get_available_parameters(self) -> list:
         return super().get_available_parameters() + [
-            "model", "temperature", "top_k", "top_p", "seed", "stream", 
-            "max_generated_tokens", "presence_penalty", "frequency_penalty",
+            CompletionParamType.TEMPERATURE,
+            CompletionParamType.TOP_K,
+            CompletionParamType.TOP_P,
+            CompletionParamType.SEED,
+            CompletionParamType.ON_STREAM,
+            CompletionParamType.MAX_GENERATED_TOKENS,
+            CompletionParamType.PRESENCE_PENALTY,
+            CompletionParamType.FREQUENCY_PENALTY,
         ]
     
     def on_generate(self, text: str, params: CompletionParams) -> str:
