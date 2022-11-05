@@ -35,7 +35,7 @@ class EasyPrompt:
     
     @staticmethod
     def from_file(path: Union[PathLike, str]) -> "EasyPrompt":
-        path_string = str(path).replace(".yml", "").replace(".yaml", "")
+        path_string = str(path).replace(".yml", "").replace(".yaml", "").replace(".md", "")
         file_exist = False
 
         for ext in [".md", ".yml", ".yaml"]:
