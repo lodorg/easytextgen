@@ -15,9 +15,13 @@ class OpenAIEngine(TextGenerationEngine):
         "davinci-codex", "cushman-codex",
     ]
     
-    def __init__(self, api_key: str, model: str) -> None:
+    def __init__(self, api_key: str, model: str, goose_ai: bool = False) -> None:
         self.api_key: str = api_key
         self.model: str = model
+        
+        if goose_ai:
+            openai.api_base = "https://api.goose.ai/v1"
+        
         openai.api_key = self.api_key
 
     def get_available_parameters(self) -> list:

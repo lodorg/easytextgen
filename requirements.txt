@@ -4,3 +4,4 @@ openai
 attrs
 pydantic
 rich
+pytest

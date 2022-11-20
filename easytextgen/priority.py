@@ -6,7 +6,7 @@ class Priority:
         
     def move_first(self, obj):
         if obj not in self.items:
-            print(f"Warning: Object {obj} not in objects!")
+            print(f"Priority Warning: Object {obj} not in priority's list of objects!")
         self.items.remove(obj)
         self.items.insert(0, obj)
         

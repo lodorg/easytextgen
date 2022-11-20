@@ -13,6 +13,7 @@ easytextgen.egg-info/top_level.txt
 easytextgen/engine/__init__.py
 easytextgen/engine/base.py
 easytextgen/engine/eleuther.py
+easytextgen/engine/forefront.py
 easytextgen/engine/open_ai.py
 easytextgen/engine/priority.py
 easytextgen/engine/textsynth.py

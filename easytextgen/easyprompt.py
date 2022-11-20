@@ -13,8 +13,8 @@ from easytextgen.completion import CompletionParams, CompletionResult
 from easytextgen.engine.base import TextGenerationEngine
 
 
-def get_from_markdown(fs: TextIOWrapper) -> tuple[dict, str]:
-    filestring = fs.read()
+def parse_ep_markdown_str(mdstring: str) -> tuple[dict, str]:
+    filestring = mdstring + ""
     
     try:
         params = yaml.safe_load(re.findall(r"```yaml(.+?)```", filestring, re.DOTALL)[0])
@@ -23,6 +23,13 @@ def get_from_markdown(fs: TextIOWrapper) -> tuple[dict, str]:
         print(e)
         raise Exception("Make sure you write the markdown file in the correct format. Please see the examples in the repo.")
 
+    return params, prompt
+
+
+def parse_ep_yaml_str(yamlstring: str) -> tuple[dict, str]:
+    params: dict = yaml.safe_load(yamlstring)
+    prompt = params["prompt"] + ""
+    del params["prompt"]
     return params, prompt
 
 
@@ -35,27 +42,28 @@ class EasyPrompt:
     
     @staticmethod
     def from_file(path: Union[PathLike, str]) -> "EasyPrompt":
-        path_string = str(path).replace(".yml", "").replace(".yaml", "").replace(".md", "")
-        file_exist = False
+        path_string = str(path)
 
-        for ext in [".md", ".yml", ".yaml"]:
-            if os.path.exists(path_string + ext):
+        for ext in [".md", ".yml", ".yaml", ".MD", ".YML", ".YAML", ""]:
+            if not os.path.exists(path_string + ext):
+                continue
                 
-                with open(path_string + ext, "r") as fs:
-                    
-                    if ext == ".md":
-                        params, prompt = get_from_markdown(fs)
-                    else:
-                        params: dict = yaml.safe_load(fs)
-                        prompt = params["prompt"] + ""
-                        del params["prompt"]
-                    
-                    file_exist = True
-                    break
+            with open(path_string + ext, "r") as fs:
+                ep_string = fs.read()
+                return EasyPrompt.from_string(ep_string)
         
-        if not file_exist:
-            raise FileNotFoundError(f"File not found `{path_string}` (.yml/.yaml)")
-            
+        raise FileNotFoundError(f"File not found `{path_string}`")
+    
+    @staticmethod
+    def from_string(ep_string: str) -> "EasyPrompt":
+        try:
+            params, prompt = parse_ep_markdown_str(ep_string)
+        except:
+            try:
+                params, prompt = parse_ep_yaml_str(ep_string)
+            except Exception as e:
+                raise Exception("AutoPrompt load failed: Invalid Markdown or YAML format. Please see examples.")
+        
         engine = get_engine(params["engine"])
         gen_params = CompletionParams(input_text="", **params)
         return EasyPrompt(prompt=prompt, engine=engine, parameters=gen_params)
