@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='easytextgen',
-    version='1.3.0',
+    version='1.3.1',
     description='API to work with transformer based text generation engines and creating prompts.',
     packages=find_packages(),
     install_requires=[
