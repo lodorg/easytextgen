@@ -18,7 +18,7 @@ def parse_ep_markdown_str(mdstring: str) -> tuple[dict, str]:
     
     try:
         params = yaml.safe_load(re.findall(r"```yaml(.+?)```", filestring, re.DOTALL)[0])
-        prompt = str(re.findall(r"```txt(.+?)```", filestring, re.DOTALL)[0]).strip()
+        prompt = get_string_after_second_backtick(filestring).strip()
     except Exception as e:
         print(e)
         raise Exception("Make sure you write the markdown file in the correct format. Please see the examples in the repo.")
@@ -31,6 +31,12 @@ def parse_ep_yaml_str(yamlstring: str) -> tuple[dict, str]:
     prompt = params["prompt"] + ""
     del params["prompt"]
     return params, prompt
+
+
+def get_string_after_second_backtick(text):
+    matches = re.finditer(r'```', text)
+    positions = [match.start() for match in matches]
+    return text[positions[1]:]
 
 
 @dataclass

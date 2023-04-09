@@ -18,3 +18,6 @@ easytextgen/engine/open_ai.py
 easytextgen/engine/priority.py
 easytextgen/engine/textsynth.py
 easytextgen/engine/vicgalle.py
+tests/test_easyprompt.py
+tests/test_engine.py
+tests/test_priority_engine.py
