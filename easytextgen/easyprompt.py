@@ -36,7 +36,7 @@ def parse_ep_yaml_str(yamlstring: str) -> tuple[dict, str]:
 def get_string_after_second_backtick(text):
     matches = re.finditer(r'```', text)
     positions = [match.start() for match in matches]
-    return text[positions[1]:]
+    return text[(positions[1] + 3):]
 
 
 @dataclass
