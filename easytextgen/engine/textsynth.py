@@ -25,18 +25,25 @@ class TextsynthEngine(TextGenerationEngine):
             CompletionParamType.MAX_GENERATED_TOKENS,
             CompletionParamType.PRESENCE_PENALTY,
             CompletionParamType.FREQUENCY_PENALTY,
+            CompletionParamType.REPETITION_PENALTY,
+            CompletionParamType.TYPICAL_P,
         ]
     
     def on_generate(self, text: str, params: CompletionParams) -> str:
         request_parameters = json.dumps({
             "prompt": text,
+            "max_tokens": params.max_generated_tokens,
             "temperature": params.temperature,
             "top_k": params.top_k,
             "top_p": params.top_p,
             "presence_penalty": params.presence_penalty,
             "frequency_penalty": params.frequency_penalty,
+            "repetition_penalty": params.repetition_penalty,
+            "typical_p": params.typical_p,
             "seed": params.seed,
+            "stop": params.stop_string,
             "stream": True,
+            "n": 1,
         })
         return self._request_completion(params, request_parameters)
     
@@ -68,8 +75,10 @@ class TextsynthEngine(TextGenerationEngine):
                 if params.stop_string in full_text:
                     full_text = full_text.split(params.stop_string)[0]
                     break
+                
                 if len_text >= params.max_generated_tokens:
                     break
+                
                 if params.on_stream is not None:
                     if not params.on_stream(streamtext):
                         break

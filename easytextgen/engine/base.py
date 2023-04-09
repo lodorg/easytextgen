@@ -14,6 +14,7 @@ class CompletionParamType:
     REPETITION_PENALTY = "repetition_penalty"
     PRESENCE_PENALTY = "presence_penalty"
     FREQUENCY_PENALTY = "frequency_penalty"
+    TYPICAL_P = "typical_p"
     STOP_STRING = "stop_string"
     SEED = "seed"
     ON_STREAM = "on_stream"
